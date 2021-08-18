@@ -45,14 +45,14 @@ task:
     ccache_stats_script:
       - ccache -s
     upload_script: |
-    up() {
-      curl --upload-file $1 https://transfer.sh/$(basename $1); echo
-      # 14 days, 10 GB limit
-    }
-    up out/target/product/mojito/*.zip
-    com () {
-      tar --use-compress-program="pigz -k -$2 " -cf $1.tar.gz $1
-    }
+      up() {
+        curl --upload-file $1 https://transfer.sh/$(basename $1); echo
+        # 14 days, 10 GB limit
+      }
+      up out/target/product/mojito/*.zip
+      com () {
+        tar --use-compress-program="pigz -k -$2 " -cf $1.tar.gz $1
+      }
     upload_ccache:
       - time com ccache 1
       - mkdir -p ~/.config/rclone
