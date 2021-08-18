@@ -53,9 +53,14 @@ task:
       com () {
         tar --use-compress-program="pigz -k -$2 " -cf $1.tar.gz $1
       }
-    upload_ccache:
-      - cd /tmp
-      - time com ccache 1
-      - mkdir -p ~/.config/rclone
-      - echo "$rclone_config" > ~/.config/rclone/rclone.conf
-      - time rclone copy ccache.tar.gz dblenk:ccache/ci2 -P
+      cd /tmp
+      export CCACHE_DIR=~ccache/tmp/rom
+      export CCACHE_EXEC=$(which ccache)
+      export USE_CCACHE=1
+      ccache -M 20G 
+      ccache -o compression=true
+      ccache -z
+      time com ccache 1
+      mkdir -p ~/.config/rclone
+      echo "$rclone_config" > ~/.config/rclone/rclone.conf
+      time rclone copy ccache.tar.gz dblenk:ccache/ci2 -P
