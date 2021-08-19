@@ -1,6 +1,6 @@
 env:
     CIRRUS_CLONE_DEPTH: 1
-    CIRRUS_WORKING_DIR: "/project"
+    CIRRUS_WORKING_DIR: "/tmp/project"
     rclone_config: "ENCRYPTED[79029daefa08fd5d81c981965cd20d2bb67c3ed9692857cbfb6167f43c28006812a7538276d04203c5d79bfc329ea36e]"
 
 task:
@@ -10,41 +10,35 @@ task:
       image: cimg/android:30.0
       cpu: 5
       memory: 20G
-    download_ccache_script:
-      - sudo apt install aria2 ccache gzip pigz rclone -y
-      - cd /tmp
-      - time aria2c https://server.boedhack.workers.dev/ccache/ci2/ccache.tar.gz -x16 -s50
-      - time tar xf ccache.tar.gz
-      - rm -rf ccache.tar.gz
-    setup_environment_script:
-      - git config --global user.email "$GIT_MAIL"
-      - git config --global user.name "boedhack99"
-      - git config --global credential.helper "cache --timeout=7200"
-      - echo "git identity setup successfully!"
-      - git clone https://github.com/boedhack99/scripts --depth=1 --branch master
-      - scripts/setup/android_build_env.sh >/dev/null
-      - bash scripts/setup/install_android_sdk.sh >/dev/null
-    sync_script:
-      - mkdir -p /tmp/rom
-      - cd /tmp/rom
-      - repo init -q --no-repo-verify --depth=1 -u git://github.com/LineageOS/android -b lineage-18.1 -g default,-device,-mips,-darwin,-notdefault
-      - git clone https://github.com/boedhack99/local_manifest --depth=1 -b R .repo/local_manifests
-      - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j30
-    build_script:
-      - cd /tmp/rom
-      - export CCACHE_DIR=~/tmp/ccache
-      - export USE_CCACHE=1 && export CCACHE_EXEC=/usr/bin/ccache && ccache -M 50G 
-      - export ANDROID_JACK_VM_ARGS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx20G"
-      - export LC_ALL=C
-      - ccache -o compression=true
-      - ccache -z
-      - . build/envsetup.sh
-      - lunch lineage_mojito-userdebug
-      - export ALLOW_MISSING_DEPENDENCIES=true
-      - make sepolicy && make init && make bootimage
-    ccache_stats_script:
-      - ccache -s
-    upload_script: |
+    run_script: |
+      sudo apt install aria2 ccache gzip pigz rclone -y
+      cd /tmp
+      time aria2c https://server.boedhack.workers.dev/ccache/ci2/ccache.tar.gz -x16 -s50
+      time tar xf ccache.tar.gz
+      rm -rf ccache.tar.gz
+      git config --global user.email "$GIT_MAIL"
+      git config --global user.name "boedhack99"
+      git config --global credential.helper "cache --timeout=7200"
+      echo "git identity setup successfully!"
+      git clone https://github.com/boedhack99/scripts --depth=1 --branch master
+      scripts/setup/android_build_env.sh >/dev/null
+      bash scripts/setup/install_android_sdk.sh >/dev/null
+      mkdir -p /tmp/rom
+      cd /tmp/rom
+      repo init -q --no-repo-verify --depth=1 -u git://github.com/LineageOS/android -b lineage-18.1 -g default,-device,-mips,-darwin,-notdefault
+      git clone https://github.com/boedhack99/local_manifest --depth=1 -b R .repo/local_manifests
+      repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j30
+      export CCACHE_DIR=~/tmp/ccache
+      export USE_CCACHE=1 && export CCACHE_EXEC=/usr/bin/ccache && ccache -M 50G 
+      export ANDROID_JACK_VM_ARGS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx20G"
+      export LC_ALL=C
+      ccache -o compression=true
+      ccache -z
+      . build/envsetup.sh
+      lunch lineage_mojito-userdebug
+      export ALLOW_MISSING_DEPENDENCIES=true
+      make sepolicy && make init && make bootimage
+      ccache -s
       up() {
         curl --upload-file $1 https://transfer.sh/$(basename $1); echo
         # 14 days, 10 GB limit
