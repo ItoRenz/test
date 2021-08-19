@@ -30,7 +30,7 @@ task:
       repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j30
       export CCACHE_DIR=~/tmp/ccache
       export USE_CCACHE=1 && export CCACHE_EXEC=/usr/bin/ccache && ccache -M 50G 
-      export ANDROID_JACK_VM_ARGS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx20G"
+      export ANDROID_JACK_VM_ARGS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx8G"
       export LC_ALL=C
       ccache -o compression=true
       ccache -z
