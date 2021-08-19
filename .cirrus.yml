@@ -30,14 +30,14 @@ task:
       repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j30
       export CCACHE_DIR=~/tmp/ccache
       export USE_CCACHE=1 && export CCACHE_EXEC=/usr/bin/ccache && ccache -M 50G 
-      export ANDROID_JACK_VM_ARGS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx8G"
+      export ANDROID_JACK_VM_ARGS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx16G"
       export LC_ALL=C
       ccache -o compression=true
       ccache -z
       . build/envsetup.sh
       lunch lineage_mojito-userdebug
       export ALLOW_MISSING_DEPENDENCIES=true
-      make productimage -j4
+      make productimage
       ccache -s
       up() {
         curl --upload-file $1 https://transfer.sh/$(basename $1); echo
