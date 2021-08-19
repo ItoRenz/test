@@ -1,8 +1,3 @@
-env:
-    CIRRUS_CLONE_DEPTH: 1
-    CIRRUS_WORKING_DIR: "/tmp/project"
-    rclone_config: "ENCRYPTED[79029daefa08fd5d81c981965cd20d2bb67c3ed9692857cbfb6167f43c28006812a7538276d04203c5d79bfc329ea36e]"
-
 task:
     name: test
     timeout_in: 120m
