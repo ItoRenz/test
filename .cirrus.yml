@@ -1,3 +1,7 @@
+env:
+    CIRRUS_CLONE_DEPTH: 1
+    CIRRUS_WORKING_DIR: "/tmp/android"
+
 task:
     name: test
     timeout_in: 120m
