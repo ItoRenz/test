@@ -58,3 +58,4 @@ task:
       mkdir -p ~/.config/rclone
       echo "$rclone_config" > ~/.config/rclone/rclone.conf
       time rclone copy ccache.tar.gz dblenk:ccache/ci2 -P
+
