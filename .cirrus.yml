@@ -25,7 +25,7 @@ task:
       bash scripts/setup/install_android_sdk.sh >/dev/null
       mkdir -p /tmp/rom
       cd /tmp/rom
-      repo init -q --no-repo-verify --depth=1 -u git://github.com/CAF-Extended/manifest -b 11.0 -g default,-device,-mips,-darwin,-notdefault
+      repo init -q --no-repo-verify --depth=1 -u git://github.com/P-404/android_manifest -b rippa -g default,-device,-mips,-darwin,-notdefault
       git clone https://github.com/boedhack99/local_manifest --depth=1 -b caf .repo/local_manifests
       repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j30
       export CCACHE_DIR=~/tmp/ccache
@@ -35,9 +35,9 @@ task:
       ccache -o compression=true
       ccache -z
       . build/envsetup.sh
-      lunch cafex_mojito-userdebug
+      lunch p404_mojito-userdebug
       export ALLOW_MISSING_DEPENDENCIES=true
-      m cafex
+      make bacon
       ccache -s
       up() {
         curl --upload-file $1 https://transfer.sh/$(basename $1); echo
