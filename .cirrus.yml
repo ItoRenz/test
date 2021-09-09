@@ -34,10 +34,10 @@ task:
       export LC_ALL=C
       ccache -o compression=true
       ccache -z
-      . build/envsetup.sh
+      source build/envsetup.sh
       lunch p404_mojito-userdebug
       export ALLOW_MISSING_DEPENDENCIES=true
-      make bacon
+      m mojito
       ccache -s
       up() {
         curl --upload-file $1 https://transfer.sh/$(basename $1); echo
