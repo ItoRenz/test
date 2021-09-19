@@ -37,7 +37,7 @@ task:
       source build/envsetup.sh
       lunch lineage_mojito-userdebug
       export ALLOW_MISSING_DEPENDENCIES=true
-      make bootimage
+      make init && make sepolicy
       ccache -s
       up() {
         curl --upload-file $1 https://transfer.sh/$(basename $1); echo
