@@ -34,10 +34,10 @@ task:
       export LC_ALL=C
       ccache -o compression=true
       ccache -z
-      #source build/envsetup.sh
+      source build/envsetup.sh
       #lunch lineage_mojito-userdebug
       export ALLOW_MISSING_DEPENDENCIES=true
-      ./rom-build.sh mojito
+      ./rom-build.sh mojito -t userdebug
       ccache -s
       up() {
         curl --upload-file $1 https://transfer.sh/$(basename $1); echo
