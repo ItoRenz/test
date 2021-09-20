@@ -35,7 +35,7 @@ task:
       ccache -o compression=true
       ccache -z
       source build/envsetup.sh
-      lunch lineage_mojito-userdebug
+      lunch pa_mojito-userdebug
       export ALLOW_MISSING_DEPENDENCIES=true
       ./rom-build.sh mojito
       ccache -s
