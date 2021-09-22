@@ -34,6 +34,7 @@ task:
       export LC_ALL=C
       ccache -o compression=true
       ccache -z
+      rm -rf hardware/qcom/bootctrl
       source build/envsetup.sh
       lunch cafex_mojito-userdebug
       export ALLOW_MISSING_DEPENDENCIES=true
