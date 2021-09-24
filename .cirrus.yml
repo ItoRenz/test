@@ -25,8 +25,8 @@ task:
       bash scripts/setup/install_android_sdk.sh >/dev/null
       mkdir -p /tmp/rom
       cd /tmp/rom
-      repo init -q --no-repo-verify --depth=1 -u git://github.com/LineageOS/android -b lineage-18.1 -g default,-device,-mips,-darwin,-notdefault
-      git clone https://github.com/boedhack99/local_manifest --depth=1 -b R .repo/local_manifests
+      repo init -q --no-repo-verify --depth=1 -u git://github.com/P-404/android_manifest -b rippa -g default,-device,-mips,-darwin,-notdefault
+      git clone https://github.com/boedhack99/local_manifest --depth=1 -b caf .repo/local_manifests
       repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j30
       export CCACHE_DIR=~/tmp/ccache
       export USE_CCACHE=1 && export CCACHE_EXEC=/usr/bin/ccache && ccache -M 50G 
@@ -34,11 +34,11 @@ task:
       export LC_ALL=C
       ccache -o compression=true
       ccache -z
-      #rm -rf hardware/qcom/bootctrl
+      hardware/qcom/bootctrl
       source build/envsetup.sh
-      lunch lineage_mojito-userdebug
+      lunch pa_mojito-userdebug
       export ALLOW_MISSING_DEPENDENCIES=true
-      make sepolicy
+      make sepolicy & make init
       ccache -s
       up() {
         curl --upload-file $1 https://transfer.sh/$(basename $1); echo
