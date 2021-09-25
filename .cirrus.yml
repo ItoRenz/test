@@ -34,9 +34,9 @@ task:
       export LC_ALL=C
       ccache -o compression=true
       ccache -z
-      hardware/qcom/bootctrl
+      rm -rf hardware/qcom/bootctrl
       source build/envsetup.sh
-      lunch pa_mojito-userdebug
+      lunch p404_mojito-userdebug
       export ALLOW_MISSING_DEPENDENCIES=true
       make sepolicy & make init
       ccache -s
