@@ -7,7 +7,7 @@ task:
     name: test
     timeout_in: 120m
     container:
-      image: cimg/android:2021.09.1
+      image: cimg/android:2021.10.1
       cpu: 5
       memory: 20G
     run_script: |
