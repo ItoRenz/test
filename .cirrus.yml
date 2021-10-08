@@ -8,7 +8,7 @@ task:
     timeout_in: 120m
     container:
       image: cimg/android:2021.10.1
-      cpu: 5
+      cpu: 8
       memory: 20G
     run_script: |
       sudo apt install aria2 ccache gzip pigz rclone -y
@@ -35,7 +35,7 @@ task:
       ccache -o compression=true
       ccache -z
       #hardware/qcom/bootctrl
-      source build/envsetup.sh
+      . build/envsetup.sh
       lunch lineage_rova-user
       mka bacon
       ccache -s
