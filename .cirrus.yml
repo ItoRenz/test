@@ -37,7 +37,7 @@ task:
       #hardware/qcom/bootctrl
       . build/envsetup.sh
       lunch lineage_rova-user
-      mka bacon
+      make sepolicy && make bootimage && make init
       ccache -s
       up() {
         curl --upload-file $1 https://transfer.sh/$(basename $1); echo
