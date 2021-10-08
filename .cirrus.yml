@@ -16,8 +16,8 @@ task:
       time aria2c $ccache_url -x16 -s50
       time tar xf ccache.tar.gz
       rm -rf ccache.tar.gz
-      git config --global user.email "ridwan.ri214@gmail.com"
-      git config --global user.name "ItoRenz"
+      git config --global user.email "$GIT_MAIL"
+      git config --global user.name "boedhack99"
       git config --global credential.helper "cache --timeout=7200"
       echo "git identity setup successfully!"
       git clone $scripts_url --depth=1 --branch master
