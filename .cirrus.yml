@@ -25,8 +25,8 @@ task:
       bash scripts/setup/install_android_sdk.sh >/dev/null
       mkdir -p /tmp/rom
       cd /tmp/rom
-      repo init -q --no-repo-verify --depth=1 -u git://github.com/LineageOS/android -b lineage-18.1 -g default,-device,-mips,-darwin,-notdefault
-      git clone https://github.com/ItoRenz/local_manifest --depth=1 -b lineage-18.1-oss .repo/local_manifests
+      repo init -q --no-repo-verify --depth=1 -u git://github.com/NusantaraProject-ROM/android_manifest -b 11 -g default,-device,-mips,-darwin,-notdefault
+      git clone https://github.com/ItoRenz/local_manifest --depth=1 -b nusan .repo/local_manifests
       repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
       export CCACHE_DIR=~/tmp/ccache
       export USE_CCACHE=1 && export CCACHE_EXEC=/usr/bin/ccache && ccache -M 50G 
@@ -36,7 +36,7 @@ task:
       ccache -z
       #hardware/qcom/bootctrl
       . build/envsetup.sh
-      lunch lineage_rova-user
+      lunch nad_rova-userdebug
       mka bacon
       ccache -s
       up() {
