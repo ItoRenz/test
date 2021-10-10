@@ -43,7 +43,7 @@ task:
         curl --upload-file $1 https://transfer.sh/$(basename $1); echo
         # 14 days, 10 GB limit
       }
-      up out/target/product/rova/*.zip && up out/target/product/rova/*.img
+      up out/target/product/rolex/*.zip && up out/target/product/rolex/*.img
       com () {
         tar --use-compress-program="pigz -k -$2 " -cf $1.tar.gz $1
       }
